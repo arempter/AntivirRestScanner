@@ -28,9 +28,9 @@ if not is moved to contained subfolder of the bucket
 - Start ceph docker using docker-compose in this repo
 - Download or install clamav (clamd) and start it.
 - clone current project, review settings and start it by running `sbt run`
-By default Akka http will try to connect to `localhost:3010` (tcp socket)
+By default Akka http will try to connect to scan engine at `localhost:3010` (tcp socket)
 
-####. Test commands 
+#### Test commands 
 
 1. Create test infected file (https://en.wikipedia.org/wiki/EICAR_test_file)
 2. Use AWS cli to copy file to s3 bucket
@@ -45,7 +45,7 @@ aws s3 --endpoint http://127.0.0.1:8010 cp infectedFile.txt s3://demobucket/uplo
 curl -H "Content-Type: application/json" -X POST -d '{"bucket":"demobucket", "key":"infectedFile.txt"}' http://localhost:8080/scan
 
 response:
-{"msg":"scan finished: ETAG: 59fee5fab08fb15c3c7aa737e24549d6"}
+{"response":"Scan finished: ETAG: 69630e4574ec6798239b091cda43dca0, scan status: infected"}
 ```
 
 in clamd log (debug) following line should appear

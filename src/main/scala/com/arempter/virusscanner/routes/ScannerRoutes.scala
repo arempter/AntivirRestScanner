@@ -17,7 +17,7 @@ trait ScannerRoutes extends S3 {
   implicit val ec: ExecutionContext
 
   case class S3Object(bucket: String, key: String)
-  case class ResponseMessage(msg: String)
+  case class ResponseMessage(response: String)
   implicit val responseMessageFormat = jsonFormat1(ResponseMessage)
   implicit val s3ObjectFormat = jsonFormat2(S3Object)
   implicit val s3ObjectMetaFormat = jsonFormat2(S3ObjectMeta)

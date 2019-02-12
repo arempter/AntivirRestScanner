@@ -61,7 +61,7 @@ trait S3 {
     Try(s3Client.copyObject(copyRequest)) match {
       case Success(r) =>
         removeScannedS3Object(bucket, s"${serverSettings.scanDirectoryPrefix}/$key")
-        s"ETAG: ${r.getETag}"
+        s"ETAG: ${r.getETag}, scan status: $result"
       case Failure(ex) => throw ex
     }
   }
