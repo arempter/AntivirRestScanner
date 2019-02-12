@@ -47,8 +47,10 @@ trait S3 {
 
   def moveS3ObjectTo(bucket: String, key: String, prefix: String, result: String): String = {
     val copyRequest = prefix match {
-      case "contained" => new CopyObjectRequest(bucket, key, bucket, s"$prefix/$key")
-      case "upload"    => new CopyObjectRequest(bucket, s"$prefix/$key", bucket, key)
+      case "contained" =>
+        new CopyObjectRequest(bucket, s"${serverSettings.scanDirectoryPrefix}/$key", bucket, s"$prefix/$key")
+      case "upload"    =>
+        new CopyObjectRequest(bucket, s"$prefix/$key", bucket, key)
     }
     val newMetadata = new ObjectMetadata()
     newMetadata.addUserMetadata("scanresult", result)
@@ -58,7 +60,7 @@ trait S3 {
 
     Try(s3Client.copyObject(copyRequest)) match {
       case Success(r) =>
-        removeScannedS3Object(bucket, s"$prefix/$key")
+        removeScannedS3Object(bucket, s"${serverSettings.scanDirectoryPrefix}/$key")
         s"ETAG: ${r.getETag}"
       case Failure(ex) => throw ex
     }
