@@ -9,10 +9,11 @@ This project is based on:
 REST)
 - ClamAV open source antivirus scanner 
 - Ceph as S3 backend
-- Kafka message broker (target for bucket notifications. Scan on object created etc.) 
+- Kafka message broker  
 
 ### How it works 
 
+- Kafka topic is read every 5 seconds for new events [message format](https://docs.aws.amazon.com/AmazonS3/latest/dev/notification-content-structure.html)
 - Rest API endpoint /scan is triggered with POST request
 - Scanner gets file from S3 Bucket
 - S3 object is streamed to clamd (listen on localhost)
@@ -26,9 +27,12 @@ if not is moved to contained subfolder of the bucket
 #### Environment setup
 
 - Start ceph docker using docker-compose in this repo
-- Download or install clamav (clamd) and start it.
+- Start kafka broker and create topic (name: create_events)
+- Download or install clamav (clamd) and start it
 - clone current project, review settings and start it by running `sbt run`
-By default Akka http will try to connect to scan engine at `localhost:3010` (tcp socket)
+
+By default Akka http will try to connect to scan engine at `localhost:3010` (tcp socket) and kafka at
+`localhost:9092`, topic `create_events` (every 5 seconds)
 
 #### Test commands 
 

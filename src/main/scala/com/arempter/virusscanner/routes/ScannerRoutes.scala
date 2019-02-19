@@ -1,11 +1,12 @@
 package com.arempter.virusscanner.routes
 
-import akka.http.scaladsl.server.Route
 import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.Route
 import com.arempter.virusscanner.ScannerAPI
 import com.arempter.virusscanner.data.S3ObjectMeta
-import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import com.arempter.virusscanner.provider.S3
+
+import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import spray.json.DefaultJsonProtocol._
 
 import scala.concurrent.{ExecutionContext, Future}
