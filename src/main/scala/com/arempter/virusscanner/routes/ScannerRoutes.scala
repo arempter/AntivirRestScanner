@@ -9,8 +9,8 @@ import com.arempter.virusscanner.provider.S3
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
 import spray.json.DefaultJsonProtocol._
 
-import scala.concurrent.{ExecutionContext, Future}
-import scala.util.{Failure, Success}
+import scala.concurrent.{ ExecutionContext, Future }
+import scala.util.{ Failure, Success }
 
 trait ScannerRoutes extends S3 {
   def getS3ObjectMeta(bucket: String, key: String): Future[List[S3ObjectMeta]]
@@ -30,7 +30,7 @@ trait ScannerRoutes extends S3 {
       path("scan") {
         entity(as[S3Object]) { s3object =>
           onComplete(new ScannerAPI(s3object.bucket, s3object.key).scan) {
-            case Success(r) => complete(ResponseMessage("Scan finished: " + r))
+            case Success(r)  => complete(ResponseMessage("Scan finished: " + r))
             case Failure(ex) => complete(ResponseMessage("Scan failed: " + ex.getMessage))
           }
         }
@@ -42,7 +42,7 @@ trait ScannerRoutes extends S3 {
       pathPrefix("status") {
         path(Segment / Segments) { (s3bucket, s3objects) =>
           onComplete(getS3ObjectMeta(s3bucket, s3objects.mkString("/"))) {
-            case Success(r) => complete(r)
+            case Success(r)  => complete(r)
             case Failure(ex) => complete(ResponseMessage("getObjectMetadata failed: " + ex.getMessage))
           }
         }

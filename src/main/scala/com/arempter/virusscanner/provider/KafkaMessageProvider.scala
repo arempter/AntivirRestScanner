@@ -3,12 +3,12 @@ package com.arempter.virusscanner.provider
 import akka.actor.ActorSystem
 import com.arempter.virusscanner.ScannerAPI
 import com.arempter.virusscanner.config.ServerSettings
-import com.arempter.virusscanner.data.{AWSMessageEventJsonSupport, Records}
+import com.arempter.virusscanner.data.{ AWSMessageEventJsonSupport, Records }
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import org.apache.kafka.common.serialization.StringDeserializer
 import spray.json._
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.{ ExecutionContext, Future }
 
 trait KafkaMessageProvider extends AWSMessageEventJsonSupport with S3 {
 
@@ -34,15 +34,14 @@ trait KafkaMessageProvider extends AWSMessageEventJsonSupport with S3 {
   }
 
   def consumeMessages() = Future {
-      val records = consumer.poll(1000)
-        .asScala.map(r => r.value().parseJson.convertTo[Records])
+    val records = consumer.poll(1000)
+      .asScala.map(r => r.value().parseJson.convertTo[Records])
 
-      records.foreach(rs=> rs.records.map{ r=>
-        println("got new object to scan: " + r.s3.bucket.name)
-        new ScannerAPI(r.s3.bucket.name.split("/")(1), r.s3.`object`.key).scan
-      })
+    records.foreach(rs => rs.records.map { r =>
+      println("got new object to scan: " + r.s3.bucket.name)
+      new ScannerAPI(r.s3.bucket.name.split("/")(1), r.s3.`object`.key).scan
+    })
     records
   }
-
 
 }

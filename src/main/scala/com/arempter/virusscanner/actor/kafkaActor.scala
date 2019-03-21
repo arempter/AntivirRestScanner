@@ -6,6 +6,6 @@ import com.arempter.virusscanner.RestServer.consumeMessages
 class kafkaActor extends Actor {
   override def receive: Receive = {
     case "scan" => consumeMessages()
-    case _ =>
+    case _      =>
   }
 }
