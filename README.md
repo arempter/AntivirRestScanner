@@ -31,6 +31,10 @@ if not is moved to contained subfolder of the bucket
 - Download or install clamav (clamd) and start it
 - clone current project, review settings and start it by running `sbt run`
 
+##### NOTE:
+as dependency it requires [clamav-scala-client](https://github.com/arempter/clamav-scala-client). Make sure it is
+added using `sbt publishLocal`
+
 By default Akka http will try to connect to scan engine at `localhost:3010` (tcp socket) and kafka at
 `localhost:9092`, topic `create_events` (every 5 seconds)
 
