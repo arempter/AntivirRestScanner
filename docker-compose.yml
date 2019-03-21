@@ -16,3 +16,8 @@ services:
       - 8010:8010
       - 5000:5000
     command: demo
+
+  clamd:
+    image: mk0x/docker-clamav:latest
+    ports:
+      - 3310:3310

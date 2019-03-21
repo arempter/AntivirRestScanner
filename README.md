@@ -27,12 +27,22 @@ if not is moved to contained subfolder of the bucket
 #### Environment setup
 
 - Start ceph docker using docker-compose in this repo
+- Start clamd docker using docker-compose in this repo
+
+```
+docker-compose up -d ceph clamd
+```
+
 - Start kafka broker and create topic (name: create_events)
-- Download or install clamav (clamd) and start it
 - clone current project, review settings and start it by running `sbt run`
 
-By default Akka http will try to connect to scan engine at `localhost:3010` (tcp socket) and kafka at
-`localhost:9092`, topic `create_events` (every 5 seconds)
+##### NOTE:
+As dependency it requires [clamav-scala-client](https://github.com/arempter/clamav-scala-client). Make sure it is
+added using `sbt publishLocal`
+
+If you enable kafka, Akka Http will try to connect to scan engine at `localhost:3010` (tcp socket) and kafka at
+`localhost:9092`, topic `create_events` (every 5 seconds).
+It expects to parse [aws s3 notification](https://docs.aws.amazon.com/AmazonS3/latest/dev/notification-content-structure.html)  
 
 #### Test commands 
 

@@ -1,6 +1,6 @@
 package com.arempter.virusscanner
 
-import akka.actor.{ActorSystem, Props}
+import akka.actor.{ ActorSystem, Props }
 import akka.http.scaladsl.Http
 import akka.stream.ActorMaterializer
 import com.arempter.virusscanner.actor.kafkaActor
@@ -22,7 +22,8 @@ object RestServer extends App with KafkaMessageProvider with ScannerRoutes {
 
   private val kafkaConsumerActor = system.actorOf(Props[kafkaActor], "kafkaConsumer")
 
-  system.scheduler.schedule(5.seconds, 5.seconds, kafkaConsumerActor, "scan")
+  if (serverSettings.kafkaEnabled)
+    system.scheduler.schedule(5.seconds, 5.seconds, kafkaConsumerActor, "scan")
 
   val bindF = Http().bindAndHandle(allRoutes, serverSettings.listenHost, serverSettings.listenPort)
   StdIn.readLine()

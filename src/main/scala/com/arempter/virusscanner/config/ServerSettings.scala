@@ -24,6 +24,7 @@ class ServerSettings(config: Config) {
   val listenPort = config.getInt("server.port")
 
   // kafka settings
+  val kafkaEnabled = config.getBoolean("kafka.enabled")
   val bootstrapServers = config.getString("kafka.bootstrap")
   val groupId = config.getString("kafka.groupid")
   val autocommit = config.getString("kafka.autocommit")

@@ -1,3 +1,5 @@
+import scalariform.formatter.preferences._
+
 name := "AntivirRestScanner"
 
 version := "0.1"
@@ -12,5 +14,14 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-http" % "10.1.7",
   "com.typesafe.akka" %% "akka-stream" % "2.5.19",
   "com.typesafe.akka" %% "akka-http-spray-json" % "10.1.7",
-  "org.apache.kafka" % "kafka-clients" % "2.0.0"
+  "org.apache.kafka" % "kafka-clients" % "2.0.0",
+  "com.arempter" %% "clamav-scala-client" % "0.1"
 )
+
+scalariformPreferences := scalariformPreferences.value
+  .setPreference(AlignSingleLineCaseStatements, true)
+  .setPreference(DanglingCloseParenthesis, Preserve)
+  .setPreference(DoubleIndentConstructorArguments, true)
+  .setPreference(DoubleIndentMethodDeclaration, true)
+  .setPreference(NewlineAtEndOfFile, true)
+  .setPreference(SingleCasePatternOnNewline, false)
